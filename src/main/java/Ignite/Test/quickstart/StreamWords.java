@@ -2,6 +2,8 @@ package Ignite.Test.quickstart;
 
 import java.io.*;
 import org.apache.ignite.*;
+import org.apache.ignite.stream.StreamSingleTupleExtractor;
+import org.apache.ignite.stream.kafka.KafkaStreamer;
 
 public class StreamWords 
 {
@@ -16,11 +18,14 @@ public class StreamWords
 		// Mark this cluster member as client.
 		Ignition.setClientMode(true);
  
-		Ignite ignite = Ignition.start("/home/jon/workspace/quickstart/example-ignite.xml");
+		Ignite ignite = Ignition.start("/home/jon/workspace/MvnIgnite/example-ignite.xml");
 		
 		// The cache is configured with sliding window holding 1 second of the streaming data.
 		IgniteCache<String, Long> stmCache = ignite.getOrCreateCache(CacheConfig.wordCache());
+		
 		IgniteDataStreamer<String, Long> stmr = ignite.dataStreamer(stmCache.getName());
+		
+//		KafkaStreamer<Object, Object, Object> kafkaStreamer = new KafkaStreamer();
         // Stream words from "alice-in-wonderland" book.
 		
 		while (true) 
